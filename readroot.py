@@ -16,15 +16,11 @@ def roottopkl(rootfile, pklfile, treename, branchlist):
         for i2 in branchlist:
             exec('indata = intree.%s' % (i2))
             output[i1][i2] = indata
-    print(output)
     with open(pklfile, 'wb') as outfile:
         pickle.dump(output, outfile)
 
+rootfile = sys.argv[1]
+pklfile = sys.argv[2]
+treename = sys.argv[3]
+branchlist = sys.argv[4:]
 
-rootfile = '/scratchfs/bes/leizh/opp_data/simr/omega_2.0.root'
-pklfile = 'test.pkl'
-treename = 'fit4c'
-branchlist = ['momega']
-
-
-roottopkl(rootfile, pklfile, treename, branchlist)
