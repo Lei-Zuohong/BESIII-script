@@ -25,8 +25,6 @@ pklfile = sys.argv[2]
 treename = sys.argv[3]
 branchlist = sys.argv[4:]
 
-'''
+
 roottopkl(rootfile, pklfile, treename, branchlist)
-'''
-print(branchlist)
 print('done root to pkl')
