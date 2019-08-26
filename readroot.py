@@ -19,10 +19,14 @@ def roottopkl(rootfile, pklfile, treename, branchlist):
     with open(pklfile, 'wb') as outfile:
         pickle.dump(output, outfile)
 
+
 rootfile = sys.argv[1]
 pklfile = sys.argv[2]
 treename = sys.argv[3]
 branchlist = sys.argv[4:]
 
+'''
+roottopkl(rootfile, pklfile, treename, branchlist)
+'''
 print(branchlist)
-
+print('done root to pkl')
