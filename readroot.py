@@ -16,6 +16,7 @@ def roottopkl(rootfile, pklfile, treename, branchlist):
         for i2 in branchlist:
             exec('indata = intree.%s' % (i2))
             output[i1][i2] = indata
+    print(output)
     with open(pklfile, 'wb') as outfile:
         pickle.dump(output, outfile)
 
