@@ -18,6 +18,7 @@ def roottopkl(rootfile, pklfile, treename, branchlist):
             output[i1][i2] = indata
     with open(pklfile, 'wb') as outfile:
         pickle.dump(output, outfile)
+    del infile
 
 
 rootfile = sys.argv[1]

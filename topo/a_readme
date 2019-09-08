@@ -1,0 +1,7 @@
+// change info
+//
+//
+// make clean
+// vi topo.card: rootfile directory, name of the tree which contain topology variable
+// make
+// ./topology
