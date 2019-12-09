@@ -1,5 +1,8 @@
+# -*- coding: UTF-8 -*-
+# Public package
 import os
 import sys
+# Private package
 import headpy.besiii.homega as ana
 
 # 帮助说明
