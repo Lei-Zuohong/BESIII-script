@@ -1,6 +1,6 @@
 import os
 import sys
-import headpy.omega as ana
+import headpy.besiii.homega as ana
 
 # 帮助说明
 if(sys.argv[1] == '-help'):
@@ -12,17 +12,16 @@ if(sys.argv[1] == '-help'):
 # 程序运行
 else:
     inenergy_list = ana.energy_list()
-    inname = ana.name()
     # 处理所有能量点
     if(sys.argv[1] == '-1'):
         for i in inenergy_list:
-            os.system('rm %s.root' % (str(i)))
-            os.system('hadd %s.root %s_*.root' %
-                      (str(i), str(i)))
+            os.system('rm %1.4f.root' % (i))
+            os.system('hadd %1.4f.root %1.4f_*.root' %
+                      (i, i))
     elif(float(sys.argv[1]) in inenergy_list):
         i = float(sys.argv[1])
-        os.system('rm %s.root' % (str(i)))
-        os.system('hadd %s.root %s_*.root' %
-                  (str(i), str(i)))
+        os.system('rm %1.4f.root' % (i))
+        os.system('hadd %1.4f.root %1.4f_*.root' %
+                  (i, i))
     else:
         print('能量点错误')

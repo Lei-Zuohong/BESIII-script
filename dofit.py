@@ -10,10 +10,8 @@ with open('%s/tempdataset.pkl' % (sys.argv[1]), 'rb') as infile:
     dataset = pickle.load(infile)
 with open('%s/tempoption2.pkl' % (sys.argv[1]), 'rb') as infile:
     option_list = pickle.load(infile)
-# 2.start roofit
-ROOT.gSystem.Load('libRooFit')
 # 2.build momega
-mass = ROOT.RooRealVar('mass', 'mass',
+mass = ROOT.RooRealVar('momega', 'momega',
                        dataset['m']-dataset['c'],
                        dataset['m']+dataset['c'])
 # 2.build pdf for mc
@@ -25,11 +23,21 @@ gsigm = ROOT.RooRealVar('gsigm', 'gsigm',
                         option_list['gsigm'][0],
                         option_list['gsigm'][1],
                         option_list['gsigm'][2])
-gauss = ROOT.RooGaussian('gauss', 'gauss', mass, gmean, gsigm)
-datam = ROOT.RooDataHist(
-    'datam', 'datam', ROOT.RooArgList(mass), hist['m'])
-pdfmc = ROOT.RooHistPdf('pdfmc', 'pdfmc', ROOT.RooArgSet(mass), datam, 0)
-pdfsi = ROOT.RooFFTConvPdf('pdfsi', 'pdfsi', mass, pdfmc, gauss)
+gauss = ROOT.RooGaussian('gauss', 'gauss',
+                         mass,
+                         gmean,
+                         gsigm)
+datam = ROOT.RooDataHist('datam', 'datam',
+                         ROOT.RooArgList(mass),
+                         hist['m'])
+pdfmc = ROOT.RooHistPdf('pdfmc', 'pdfmc',
+                        ROOT.RooArgSet(mass),
+                        datam,
+                        1)
+pdfsi = ROOT.RooFFTConvPdf('pdfsi', 'pdfsi',
+                           mass,
+                           pdfmc,
+                           gauss)
 # 2.build pdf for back
 p0 = ROOT.RooRealVar('p0', 'p0',
                      option_list['p0'][0],
@@ -43,8 +51,9 @@ p2 = ROOT.RooRealVar('p2', 'p2',
                      option_list['p2'][0],
                      option_list['p2'][1],
                      option_list['p2'][2])
-pdfba = ROOT.RooPolynomial(
-    'pdfba', 'pdfba', mass, ROOT.RooArgList(p0, p1, p2))
+pdfba = ROOT.RooPolynomial('pdfba', 'pdfba',
+                           mass,
+                           ROOT.RooArgList(p0, p1, p2))
 # 2.conbine gauss1+gauss2
 npdf1 = ROOT.RooRealVar('npdf1', 'npdf1',
                         option_list['npdf1'][0],
@@ -54,13 +63,16 @@ npdf2 = ROOT.RooRealVar('npdf2', 'npdf2',
                         option_list['npdf2'][0],
                         option_list['npdf2'][1],
                         option_list['npdf2'][2])
-pdf12 = ROOT.RooAddPdf('pdf12', 'pdf12', ROOT.RooArgList(
-    pdfsi, pdfba), ROOT.RooArgList(npdf1, npdf2))
+pdf12 = ROOT.RooAddPdf('pdf12', 'pdf12',
+                       ROOT.RooArgList(pdfsi, pdfba),
+                       ROOT.RooArgList(npdf1, npdf2))
+print(hist['r'].GetEntries())
 # 3.import data
-datar = ROOT.RooDataHist(
-    'datar', 'datar', ROOT.RooArgList(mass), hist['r'])
+datar = ROOT.RooDataSet('datar', 'datar',
+                        hist['r'],
+                        ROOT.RooArgSet(ROOT.RooArgList(mass)))
 # 3.fit
-a = pdf12.fitTo(datar)
+pdf12.fitTo(datar)
 # 4.output
 output = {}
 output['nevent'] = npdf1.getVal()
