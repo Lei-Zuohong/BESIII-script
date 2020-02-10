@@ -3,7 +3,7 @@
 import os
 import sys
 # Private package
-import headpy.besiii.homega as ana
+import headpy.hbes.hopp as hopp
 
 # 帮助说明
 if(sys.argv[1] == '-help'):
@@ -14,7 +14,7 @@ if(sys.argv[1] == '-help'):
     print(helptext)
 # 程序运行
 else:
-    inenergy_list = ana.energy_list()
+    inenergy_list = hopp.energy_list()
     # 处理所有能量点
     if(sys.argv[1] == '-1'):
         for i in inenergy_list:
