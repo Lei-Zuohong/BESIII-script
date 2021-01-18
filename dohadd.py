@@ -3,7 +3,7 @@
 import os
 import sys
 # Private package
-import headpy.hbes.hopp as hopp
+import headpy.hbes.hconst as hconst
 
 # 帮助说明
 if(sys.argv[1] == '-help'):
@@ -14,7 +14,7 @@ if(sys.argv[1] == '-help'):
     print(helptext)
 # 程序运行
 else:
-    inenergy_list = hopp.energy_list()
+    inenergy_list = hconst.energy_sort()
     # 处理所有能量点
     if(sys.argv[1] == '-1'):
         for i in inenergy_list:
